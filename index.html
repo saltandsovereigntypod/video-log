@@ -21,7 +21,8 @@
 <title>Midnight Rewind</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Oswald:wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Permanent+Marker&family=Creepster&family=Oswald
+:wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap">
 
 <style>
 :root{
@@ -361,7 +362,181 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
 .let-neon .spine-sub{color:#FFC7CF;text-shadow:0 0 4px rgba(255,59,85,.8)}
 .let-printed .spine-text,.let-printed .slab-title{color:#F6F1E6;text-shadow:0 1px 0 rgba(0,0,0,.55)}
 
+/* ---------- bare tapes ----------
+   The cassette with no box: moulded black plastic, gripping ridges at each
+   end, a shallow well down the middle where somebody stuck a label and wrote
+   on it. The plastic is the same leaf stack as any box, so a recoloured
+   cassette keeps its sheen and grain. */
+.fin-bare{
+  --grain:var(--grain-plastic);--grain-size:46px;
+  --sheen:linear-gradient(90deg, transparent 8%, rgba(255,255,255,.10) 15%, rgba(255,255,255,.03) 24%, transparent 32%);
+  --leaf-base:linear-gradient(180deg, color-mix(in srgb, var(--c) 88%, white 12%), var(--c) 20%, color-mix(in srgb, var(--c) 85%, black 15%) 100%);
+}
+.spine.fin-bare{border-radius:3px}
+.fin-bare.spine-body::before,.fin-bare.spine-body::after{content:none}
+.fin-bare .sp-sticker{display:none}
+.bare-grip{
+  position:absolute;left:3px;right:3px;height:20px;z-index:2;border-radius:1px;
+  background:repeating-linear-gradient(180deg, rgba(255,255,255,.08) 0 1px, rgba(0,0,0,.45) 1px 3px);
+}
+.bare-grip.top{top:3px}
+.bare-grip.bot{bottom:3px}
+.bare-well{
+  position:absolute;top:26px;bottom:26px;left:3px;right:3px;z-index:1;border-radius:2px;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.65), inset 1px 2px 3px rgba(0,0,0,.75), inset -1px -1px 0 rgba(255,255,255,.07);
+}
+/* Ink. Marker bleeds a little into the paper; pencil is lighter and greyer. */
+.let-marker{--ink:#141210}
+.let-red{--ink:#9E101B}
+.let-pencil{--ink:#4E4B46}
+
+/* The label. Written along its length, so the lines of writing stack across
+   the spine: title first, then the details, then the note. */
+.tlabel{
+  position:absolute;top:28px;bottom:28px;left:4px;right:4px;z-index:3;
+  writing-mode:vertical-rl;text-orientation:mixed;padding:9px 2px 7px;
+  transform:rotate(var(--tilt,0deg));overflow:hidden;
+  color:var(--ink,#141210);line-height:1.08;
+}
+.tlabel > span{display:block;white-space:nowrap;overflow:hidden;text-overflow:clip;position:relative;z-index:2}
+.tl-title{
+  font-family:"Permanent Marker","Comic Sans MS",cursive;font-size:var(--fs);letter-spacing:.01em;
+  text-shadow:0 0 .6px var(--ink,#141210);
+}
+.tlabel.two .tl-title{white-space:normal;max-width:calc(var(--fs) * 2.25);line-height:1.02}
+.tl-meta{font-family:"Caveat",cursive;font-weight:700;font-size:11.5px;letter-spacing:.02em;margin-right:2px;opacity:.92}
+.tl-stars{font-family:"Caveat",cursive;font-weight:700;font-size:11px;color:#9E101B;margin-right:1px;letter-spacing:-.05em}
+.tl-note{font-family:"Caveat",cursive;font-weight:700;font-size:11.5px;margin-right:2px;opacity:.88;text-transform:none}
+.tl-note.red{color:#9E101B}
+.tl-note.x{text-decoration:line-through;text-decoration-thickness:1.5px}
+.let-pencil .tl-title{font-family:"Caveat",cursive;font-weight:700;font-size:calc(var(--fs) * 1.2);opacity:.85;text-shadow:none}
+.let-pencil .tl-meta,.let-pencil .tl-note{opacity:.75}
+
+/* Masking tape: translucent buff paper, torn at both ends. */
+.lab-masking{
+  background:var(--grain-card) 0 0/60px, linear-gradient(90deg, rgba(0,0,0,.07), transparent 25%, transparent 75%, rgba(0,0,0,.09)), #DCCB9C;
+  background-blend-mode:overlay, normal, normal;
+  opacity:.95;left:2px;right:2px;
+  clip-path:polygon(0 1.5%,14% 0,29% 2.2%,45% .4%,62% 2%,79% 0,100% 1.6%,100% 98.4%,86% 100%,71% 97.8%,53% 99.6%,36% 98%,19% 100%,0 98.2%);
+}
+/* A stationery sticker: ruled in blue along its length, a red margin, yellowed
+   at the edges with age. */
+.lab-sticker{
+  background:
+    repeating-linear-gradient(90deg, transparent 0 12px, rgba(70,110,170,.32) 12px 13px),
+    linear-gradient(90deg, transparent calc(100% - 6px), rgba(190,40,50,.55) calc(100% - 6px) calc(100% - 5px), transparent calc(100% - 5px)),
+    radial-gradient(140% 70% at 50% 50%, transparent 55%, rgba(160,120,40,.28) 100%),
+    #EFE9DA;
+  border-radius:3px;top:30px;bottom:30px;
+  box-shadow:0 0 0 1px rgba(0,0,0,.18);
+}
+/* Duct tape: grey cloth weave, torn ragged at both ends. */
+.lab-duct{
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,.07) 0 1px, transparent 1px 3px),
+    linear-gradient(90deg,#74777b,#a2a5a9 38%,#8a8d91 70%,#6f7276);
+  left:1px;right:1px;
+  clip-path:polygon(0 2%,8% 0,17% 1.8%,26% .2%,38% 2.4%,51% .6%,63% 2%,75% 0,88% 1.6%,100% .4%,100% 99%,90% 97.8%,80% 100%,68% 98.2%,55% 99.8%,43% 97.6%,31% 99.4%,19% 98%,9% 100%,0 98.6%);
+}
+/* A shop's label, half peeled away: glue residue shows where the corner went. */
+.lab-torn{
+  background:
+    linear-gradient(180deg, transparent 0, transparent 100%),
+    radial-gradient(160% 60% at 50% 100%, rgba(150,110,40,.22), transparent 60%),
+    #EDE8DE;
+  border-radius:2px;
+  clip-path:polygon(0 16%,22% 12%,38% 15%,55% 8%,72% 6%,100% 0,100% 100%,0 100%);
+  padding-top:22%;
+}
+.lab-torn::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:15%;z-index:1;
+  background:repeating-linear-gradient(135deg, rgba(255,255,255,.25) 0 2px, transparent 2px 5px);
+}
+/* Things that happen to a tape that has been around. */
+.tl-ring{
+  position:absolute;z-index:1;width:30px;height:30px;left:50%;top:62%;transform:translate(-50%,-50%);border-radius:50%;
+  box-shadow:inset 0 0 0 2px rgba(110,70,30,.28), inset 0 0 0 5px rgba(110,70,30,.07);
+}
+.tl-print{
+  position:absolute;z-index:1;width:18px;height:24px;left:22%;top:16%;border-radius:50%;transform:rotate(25deg);
+  background:repeating-radial-gradient(ellipse at 50% 60%, rgba(20,16,14,.16) 0 1px, transparent 1px 2.6px);
+  -webkit-mask:radial-gradient(closest-side, #000 70%, transparent);mask:radial-gradient(closest-side, #000 70%, transparent);
+}
+.tl-blood{
+  position:absolute;z-index:3;width:26px;height:40px;right:-2px;top:34%;pointer-events:none;
+  background:
+    radial-gradient(4px 5px at 60% 20%, rgba(120,6,16,.85) 60%, transparent 62%),
+    radial-gradient(2px 2px at 30% 34%, rgba(120,6,16,.8) 60%, transparent 62%),
+    radial-gradient(2.5px 7px at 66% 46%, rgba(120,6,16,.7) 60%, transparent 62%),
+    radial-gradient(1.5px 1.5px at 45% 70%, rgba(120,6,16,.8) 60%, transparent 62%);
+}
+
+/* Lying flat in a stack, the label reads across. */
+.slab.fin-bare{padding:0 22px}
+.slab.fin-bare::after{content:none}
+.sl-grip{position:absolute;top:2px;bottom:2px;width:16px;z-index:1;
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 1px, rgba(0,0,0,.45) 1px 3px)}
+.sl-grip.start{left:3px}
+.sl-grip.end{right:3px}
+.tlabel.horiz{writing-mode:horizontal-tb;padding:2px 6px}
+.slab-label{top:3px;bottom:3px;left:22px;right:22px;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.slab-label .tl-title{font-size:calc(var(--fs) * 1.05);text-overflow:ellipsis}
+.tlabel.horiz.lab-masking,.tlabel.horiz.lab-duct{
+  clip-path:polygon(1.5% 0,98.5% 0,100% 18%,98.6% 40%,100% 62%,98.4% 84%,99.6% 100%,1.2% 100%,0 80%,1.4% 58%,0 36%,1.6% 16%);
+}
+.tlabel.horiz.lab-sticker{
+  background:
+    repeating-linear-gradient(180deg, transparent 0 12px, rgba(70,110,170,.32) 12px 13px),
+    linear-gradient(90deg, transparent 8px, rgba(190,40,50,.55) 8px 9px, transparent 9px),
+    radial-gradient(140% 90% at 50% 50%, transparent 55%, rgba(160,120,40,.28) 100%),
+    #EFE9DA;
+}
+.tlabel.horiz.lab-torn{clip-path:polygon(0 0,74% 0,80% 22%,88% 12%,94% 30%,100% 26%,100% 100%,0 100%);padding-top:2px}
+.tlabel.horiz.lab-torn::before{content:none}
+
+/* The cassette's face, stood on its end. */
+.cass-front{width:100%;height:100%;position:relative;overflow:hidden;background:#0b0b0c}
+.cass{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(90deg);border-radius:calc(var(--cw) * .045);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07), inset 0 -3px 6px rgba(0,0,0,.5);
+}
+.cass .tlabel{
+  top:7%;left:6%;right:6%;bottom:auto;height:47%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:3% 5%;
+}
+.cass .tlabel > span{white-space:normal}
+.cass .tl-title{font-size:var(--fs);line-height:1.02;text-wrap:balance;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cass .tl-meta,.cass .tl-note{font-size:calc(var(--cw) * .072);margin:calc(var(--cw) * .012) 0 0}
+.cass .tl-stars{font-size:calc(var(--cw) * .07);margin:0}
+.cass .tlabel.lab-torn{padding-top:5%}
+.cass-window{
+  position:absolute;left:24%;right:24%;top:61%;height:30%;z-index:2;border-radius:calc(var(--cw) * .03);overflow:hidden;
+  background:linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.02) 40%, rgba(0,0,0,.25)), #1a1714;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.8), inset 0 2px 4px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.06);
+}
+/* Tape wound on a reel: brown, with fine rings, around a white hub. */
+.cass-reel{
+  position:absolute;top:50%;transform:translate(-50%,-50%);border-radius:50%;
+  background:
+    radial-gradient(circle, #EDEAE2 0 calc(var(--hub) * .26), #2a211b calc(var(--hub) * .26) calc(var(--hub) * .5), transparent calc(var(--hub) * .5)),
+    repeating-radial-gradient(circle, #3b2a1f 0 1px, #2c1f17 1px 2px);
+}
+.cass-screw{position:absolute;width:calc(var(--cw) * .035);height:calc(var(--cw) * .035);border-radius:50%;z-index:2;
+  background:radial-gradient(circle at 40% 35%, #8a8a8a, #2a2a2a 70%)}
+.cass-screw.s1{left:2.5%;top:6%}
+.cass-screw.s2{right:2.5%;top:6%}
+.cass-screw.s3{left:2.5%;bottom:6%}
+.cass-screw.s4{right:2.5%;bottom:6%}
+.faced .cass-front,.ang-front .cass-front{border-radius:inherit}
+
+/* Only the controls a tape of this kind has. */
+[data-bare="1"] .only-box,[data-bare="0"] .only-bare{display:none!important}
+
 /* ---------- the box's furniture ---------- */
+
 /* A rental store's barcode sticker, slapped on a little crooked. */
 .sp-sticker{
   position:absolute;left:18%;right:18%;bottom:34px;height:26px;z-index:3;
@@ -2344,8 +2519,20 @@ function darken(hex, keep){
   return out;
 }
 
+/* A bare cassette is black plastic whatever the film, give or take the batch
+   it came from; only a boxed tape takes its colour from the franchise. */
+var PLASTIC = ["#151517","#1B1B1D","#121214","#1F1C1C","#18191D","#232326"];
+function oracleTint(b){
+  if(!b.oracleTags || !b.spineColor) return false;
+  var c = String(b.spineColor).toLowerCase();
+  return Object.keys(GENRE_COLOR).some(function(k){ return GENRE_COLOR[k].toLowerCase() === c; });
+}
 function color(b){
-  if(b.spineColor) return safeColor(b.spineColor, PALETTE[0]);
+  var bare = finishOf(b) === "bare";
+  /* The Oracle tints a rented tape by genre so a box comes out in a fitting
+     colour. That tint is not hers, so a bare cassette stays black under it. */
+  if(b.spineColor && !(bare && oracleTint(b))) return safeColor(b.spineColor, PALETTE[0]);
+  if(bare) return PLASTIC[hash("plastic:" + b.id) % PLASTIC.length];
   var seed = b.series ? b.series : (b.director || b.title || "");
   return PALETTE[hash(seed) % PALETTE.length];
 }
@@ -2382,22 +2569,47 @@ function coverBaseCSS(b){
 
 /* Five kinds of box. An untouched tape is an ex-rental: worn, scuffed and
    wearing the shop's barcode sticker. */
-var FINISHES = ["rental","slipcase","clamshell","foil","glossy"];
-var FINISH_LABELS = {rental:"Ex-rental", slipcase:"Slipcase", clamshell:"Clamshell", foil:"Foil", glossy:"Glossy"};
-var LETTERINGS = ["printed","chrome","neon"];
-var LETTER_LABELS = {printed:"Printed", chrome:"Chrome", neon:"Neon"};
-function finishOf(b){ return FINISHES.indexOf(b.finish) === -1 ? "rental" : b.finish; }
+/* Six kinds of tape. An untouched tape is bare: the cassette out of its box,
+   black plastic with a hand-written label on the spine, like something found
+   in a box in somebody's basement. The other five are boxed. */
+var FINISHES = ["bare","rental","slipcase","clamshell","foil","glossy"];
+var FINISH_LABELS = {bare:"Bare tape", rental:"Ex-rental", slipcase:"Slipcase", clamshell:"Clamshell", foil:"Foil", glossy:"Glossy"};
+/* Hand lettering belongs to a bare tape's label, print to a box: the two sets
+   never mix, so a lettering from the other set falls back to the default. */
+var HAND_LETTERS = ["marker","red","pencil"], BOX_LETTERS = ["printed","chrome","neon"];
+var LETTERINGS = HAND_LETTERS.concat(BOX_LETTERS);
+var LETTER_LABELS = {marker:"Marker", red:"Red marker", pencil:"Pencil", printed:"Printed", chrome:"Chrome", neon:"Neon"};
+function finishOf(b){ return FINISHES.indexOf(b.finish) === -1 ? "bare" : b.finish; }
 /* Finish picks the default treatment; a tape may still say otherwise. */
 function letteringOf(b){
-  if(LETTERINGS.indexOf(b.lettering) !== -1) return b.lettering;
-  var f = finishOf(b);
-  return f === "foil" ? "chrome" : "printed";
+  var bare = finishOf(b) === "bare";
+  if((bare ? HAND_LETTERS : BOX_LETTERS).indexOf(b.lettering) !== -1) return b.lettering;
+  if(bare) return hash("ink:" + b.id) % 6 === 0 ? "red" : "marker";
+  return finishOf(b) === "foil" ? "chrome" : "printed";
 }
 /* Only a tape that has been through a rental shop carries its sticker. */
 function stickerOn(b){
+  if(finishOf(b) === "bare") return false;
   if(typeof b.sticker === "boolean") return b.sticker;
   return finishOf(b) === "rental";
 }
+/* What the title is written on. Left alone, each tape gets one of the four,
+   seeded from its id, so a shelf of them looks collected rather than issued. */
+var LABELS = ["masking","sticker","duct","torn"];
+var LABEL_NAMES = {masking:"Masking tape", sticker:"Sticker", duct:"Duct tape", torn:"Torn label"};
+function labelOf(b){
+  return LABELS.indexOf(b.label) !== -1 ? b.label : LABELS[hash("label:" + b.id) % LABELS.length];
+}
+function scrawlOn(b){ return typeof b.scrawl === "boolean" ? b.scrawl : true; }
+/* The note someone else wrote on the tape before it reached you. */
+var SCRAWLS = [
+  "DO NOT WATCH", "don't tape over", "watch alone", "NOT FOR KIDS", "who left this here?",
+  "found in the attic", "copy 2 — don't lose", "it's on the tape", "REWIND IT", "3:07 AM",
+  "she's in the background", "do not return", "sound goes wrong at 1hr", "recorded over?",
+  "the end is missing", "play it twice", "#13", "evidence", "it knows", "don't look at 47:12",
+  "from the basement", "not mine", "keep away from the TV", "watched it. sorry."
+];
+function scrawlOf(b){ return SCRAWLS[hash("scrawl:" + b.id) % SCRAWLS.length]; }
 function displayMode(b){
   return b.display === "front" ? "front" : (b.display === "angle" ? "angle" : "spine");
 }
@@ -2422,11 +2634,14 @@ function angledDrop(b){
 }
 function materialClass(b){ return " fin-" + finishOf(b) + " let-" + letteringOf(b); }
 
+/* A hand-written label has room for everything, and whoever wrote it would
+   have put it all down; a box spine stays sparse. */
+var BARE_SPINE_DEFAULTS = {title:true, director:true, series:true, number:true, pips:true};
 function show(b){
   var s = b.spineShow || {};
-  var out = {};
-  Object.keys(SPINE_DEFAULTS).forEach(function(k){
-    out[k] = (typeof s[k] === "boolean") ? s[k] : SPINE_DEFAULTS[k];
+  var out = {}, d = finishOf(b) === "bare" ? BARE_SPINE_DEFAULTS : SPINE_DEFAULTS;
+  Object.keys(d).forEach(function(k){
+    out[k] = (typeof s[k] === "boolean") ? s[k] : d[k];
   });
   return out;
 }
@@ -2443,8 +2658,11 @@ function coverShow(b){
    than a sleeve, and how fat the case is. The lettering is fitted to the room
    instead (see spineFontSize). */
 var COVER_RATIO = 0.56;
-var BOX_W = {rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
-function autoH(b){ return (finishOf(b) === "clamshell" ? 266 : 258) + (hash(b.id) % 3); }
+var BOX_W = {bare:54, rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
+function autoH(b){
+  var f = finishOf(b);
+  return (f === "clamshell" ? 266 : f === "bare" ? 252 : 258) + (hash(b.id) % 3);
+}
 function autoW(b){ return BOX_W[finishOf(b)] + (hash(b.id) % 3); }
 function spineH(b){ return b.spineHeight || autoH(b); }
 function spineW(b){ return b.spineWidth || autoW(b); }
@@ -2568,6 +2786,7 @@ function pipMarks(b){
   return h;
 }
 function coverGenHTML(b, w){
+  if(finishOf(b) === "bare") return cassetteFrontHTML(b, w);
   var len = (b.title || "").length;
   var scale = len > 44 ? .62 : len > 30 ? .74 : len > 20 ? .86 : 1;
   var cs = coverShow(b);
@@ -2662,10 +2881,12 @@ function slabHTML(b, messy){
     : "";
   var st = STATUS[b.status] || STATUS.want;
   var pips = sh.pips ? pipMarks(b) : "";
-  var furniture =
-    (stickerOn(b) ? '<span class="sl-sticker"></span>' : "") +
-    '<span class="sl-rule start"></span><span class="sl-rule end"></span>' +
-    '<span class="sl-case start"></span><span class="sl-case end"></span>';
+  var bare = finishOf(b) === "bare";
+  var furniture = bare
+    ? '<span class="sl-grip start"></span><span class="sl-grip end"></span>'
+    : (stickerOn(b) ? '<span class="sl-sticker"></span>' : "") +
+      '<span class="sl-rule start"></span><span class="sl-rule end"></span>' +
+      '<span class="sl-case start"></span><span class="sl-case end"></span>';
   return '<button class="slab leaf' + materialClass(b) + (stickerOn(b) ? " has-sticker" : "") + (isSelected(b) ? " sel" : "") +
       '" type="button" data-id="' + esc(b.id) + '"' +
     ' style="--slw:' + w + 'px;--slh:' + hgt + 'px;--c:' + esc(color(b)) + ';--fs:' + fs.toFixed(1) + 'px' +
@@ -2676,9 +2897,13 @@ function slabHTML(b, messy){
     furniture +
     (state.selecting && isSelected(b)
       ? '<span class="sel-tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg></span>' : "") +
-    (sh.number && b.part ? '<span class="slab-num">' + esc(b.part) + "</span>" : "") +
-    (sh.title ? '<span class="slab-title">' + esc(b.title) + "</span>" : "") +
-    (pips ? '<span class="slab-pips">' + pips + "</span>" : "") +
+    (bare
+      ? '<span class="tlabel horiz slab-label lab-' + labelOf(b) + '" style="--tilt:' + (labelTilt(b) / 2) + 'deg">' +
+          (sh.title ? '<span class="tl-title">' + esc(b.title) + "</span>" : "") + "</span>"
+      : (sh.number && b.part ? '<span class="slab-num">' + esc(b.part) + "</span>" : "") +
+        (sh.title ? '<span class="slab-title">' + esc(b.title) + "</span>" : "") +
+        (pips ? '<span class="slab-pips">' + pips + "</span>" : "")) +
+
   "</button>";
 }
 function stackHTML(st){
@@ -3396,6 +3621,7 @@ function chromeHTML(b){
 /* The box's furniture and the lettering, shared by a spine-out tape and the
    spine face of an angled one. */
 function spineFaceHTML(b, h, fs, s, sub, withPages){
+  if(finishOf(b) === "bare") return bareSpineHTML(b, h, s);
   return (stickerOn(b) ? '<span class="sp-sticker"></span>' : "") +
     '<span class="sp-case top"></span><span class="sp-case bot"></span>' +
     (withPages ? '<span class="sp-pages"></span>' : "") +
@@ -3404,12 +3630,115 @@ function spineFaceHTML(b, h, fs, s, sub, withPages){
     (sub ? '<span class="spine-sub">' + esc(sub) + "</span>" : "") +
     (s.pips ? pipRow(b) : "");
 }
+/* ---------------- bare tapes ----------------
+   A cassette with no box. Everything on it is hand-made: the label is masking
+   tape, a stationery sticker, duct tape or a half-peeled shop label, written on
+   in marker, and some of them carry a note from whoever had the tape before.
+   Every choice that is not the tape's own (label, ink, tilt, stains, the note)
+   is seeded from its id, so a tape looks the same every time. */
+function seeded(b, salt, n){ return hash(salt + ":" + b.id) % n; }
+function labelTilt(b){ return (seeded(b, "tilt", 25) - 12) / 10; }
+function stainsHTML(b){
+  return (seeded(b, "ring", 100) < 30 ? '<i class="tl-ring"></i>' : "") +
+    (seeded(b, "print", 100) < 25 ? '<i class="tl-print"></i>' : "") +
+    (seeded(b, "blood", 100) < 12 ? '<i class="tl-blood"></i>' : "");
+}
+/* Stars as somebody would draw them in marker: whole ones and a half. */
+function starText(b){
+  var key = state.categories[0] ? state.categories[0].key : "overall";
+  var v = ratingOf(b, key);
+  if(v <= 0) return "";
+  return new Array(Math.floor(v) + 1).join("★") + (v % 1 ? "½" : "");
+}
+/* The second line of the label: everything a careful person writes down. */
+function labelDetails(b, s){
+  var bits = [];
+  if(s.series && b.series) bits.push(b.series + (s.number && b.part ? " pt." + b.part : ""));
+  else if(s.number && b.part) bits.push("part " + b.part);
+  if(s.director && b.director) bits.push(b.director);
+  if(b.year) bits.push(String(b.year));
+  if(b.runtime) bits.push(b.runtime + " min");
+  return bits;
+}
+function noteHTML(b, cls){
+  if(!scrawlOn(b)) return "";
+  var crossed = seeded(b, "cross", 3) === 0, red = seeded(b, "redn", 3) === 0;
+  return '<span class="' + cls + (crossed ? " x" : "") + (red ? " red" : "") + '">' + esc(scrawlOf(b)) + "</span>";
+}
+function bareSpineHTML(b, h, s){
+  var len = h - 58;                              /* the label, end to end */
+  var title = b.title || "Untitled";
+  var chars = Math.max(1, title.length);
+  /* Permanent Marker runs about 0.6em a letter. Past what one line can hold at
+     a readable size, the title wraps onto a second and the note gives way. */
+  var one = len / (chars * 0.6);
+  var two = one < 10;
+  var fs = two ? Math.min(12, (len * 2) / (chars * 0.62)) : Math.min(19, one);
+  fs = Math.max(7.5, fs) * textScale(b);
+  var details = labelDetails(b, s), stars = s.pips ? starText(b) : "";
+  return '<span class="bare-grip top"></span><span class="bare-grip bot"></span><span class="bare-well"></span>' +
+    '<span class="tlabel lab-' + labelOf(b) + (two ? " two" : "") + '" style="--tilt:' + labelTilt(b) +
+      'deg;--fs:' + fs.toFixed(2) + 'px">' +
+      stainsHTML(b) +
+      (s.title ? '<span class="tl-title">' + esc(title) + "</span>" : "") +
+      (details.length ? '<span class="tl-meta">' + esc(details.join(" · ")) + "</span>" : "") +
+      (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
+      (two ? "" : noteHTML(b, "tl-note")) +
+    "</span>";
+}
+/* The face of the cassette, for a tape stood front-out or turned on the shelf.
+   It is drawn landscape, as a cassette is, and turned a quarter so it stands on
+   its end. The tape on the two reels moves across as she watches it. */
+function reelAmount(b){
+  if(b.status === "watched") return 1;
+  if(b.status === "watching" || b.status === "paused" || b.status === "dnf"){
+    return Math.max(0, Math.min(100, b.progress || 0)) / 100;
+  }
+  return 0;
+}
+function cassetteFrontHTML(b, w){
+  var W = Math.round(w), H = Math.round(w / COVER_RATIO);
+  var cs = coverShow(b), title = b.title || "Untitled";
+  var chars = Math.max(1, title.length);
+  var fs = Math.max(W * 0.08, Math.min(W * 0.2, (H * 0.84 * 2) / (chars * 0.62) * 0.92));
+
+  var wh = W * 0.30, a = reelAmount(b);
+  function reel(x, amt){
+    var d = wh * (0.55 + 1.15 * amt);
+    return '<i class="cass-reel" style="left:' + x + '%;width:' + d.toFixed(1) + 'px;height:' + d.toFixed(1) +
+      'px;--hub:' + (wh * 0.46).toFixed(1) + 'px"></i>';
+  }
+  var details = [];
+  if(cs.director && b.director) details.push(b.director);
+  if(b.year) details.push(String(b.year));
+  if(b.runtime) details.push(b.runtime + " min");
+  if(cs.series && b.series) details.push(b.series + (cs.number && b.part ? " pt." + b.part : ""));
+  else if(cs.number && b.part) details.push("part " + b.part);
+  var stars = cs.pips ? starText(b) : "";
+  return '<div class="cass-front" style="--c:' + esc(color(b)) + ';--cw:' + W + 'px">' +
+    '<div class="cass leaf fin-bare" style="--c:' + esc(color(b)) + ';width:' + H + 'px;height:' + W + 'px">' +
+      '<i class="cass-screw s1"></i><i class="cass-screw s2"></i><i class="cass-screw s3"></i><i class="cass-screw s4"></i>' +
+      '<span class="tlabel horiz lab-' + labelOf(b) + '" style="--tilt:' + labelTilt(b) + 'deg;--fs:' + fs.toFixed(2) + 'px">' +
+        stainsHTML(b) +
+        (cs.title ? '<span class="tl-title">' + esc(title) + "</span>" : "") +
+        (details.length ? '<span class="tl-meta">' + esc(details.join(" · ")) + "</span>" : "") +
+        (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
+        noteHTML(b, "tl-note") +
+      "</span>" +
+      '<span class="cass-window">' + reel(27, 1 - a) + reel(73, a) + "</span>" +
+    "</div>" +
+  "</div>";
+}
+
 function coverPartsHTML(){
+
   return '<span class="fc-board"></span><span class="fc-spine"></span>';
 }
 /* Room the head band and foot take, so the lettering is fitted to what is left. */
 function spineFurnitureClass(b, s){
-  return (s.number && b.part ? " has-num" : "") + (stickerOn(b) ? " has-sticker" : "");
+  if(finishOf(b) === "bare") return "";
+  return
+ (s.number && b.part ? " has-num" : "") + (stickerOn(b) ? " has-sticker" : "");
 }
 function spineFontSize(b, h, sub){
   /* Fit the lettering to the room it actually has: box height, less the head
@@ -3895,7 +4224,7 @@ function openTape(id, isNew){
 
       '<details class="appear" id="appearPanel"' + (isNew ? "" : "") + '>' +
         "<summary>Box &amp; spine</summary>" +
-        '<div class="appear-body">' +
+        '<div class="appear-body" id="appearBody" data-bare="' + (finishOf(b) === "bare" ? 1 : 0) + '">' +
           '<div class="cover-area">' +
             '<div class="cover-preview' + materialClass(b) + '" id="coverPreview" style="--c:' + esc(coverFrom(b)) + '"' +
               (b.coverImage ? ' data-img-cover="' + esc(imgKey(b.id, "cover")) + '"' : "") + ">" +
@@ -3934,11 +4263,22 @@ function openTape(id, isNew){
             '<span class="sub-label">Lettering</span>' +
             '<div class="seg" id="letterSeg">' +
               LETTERINGS.map(function(l){
-                return '<button type="button" data-lettering="' + l + '" aria-pressed="' +
+                return '<button type="button" class="' + (HAND_LETTERS.indexOf(l) !== -1 ? "only-bare" : "only-box") +
+                  '" data-lettering="' + l + '" aria-pressed="' +
                   (letteringOf(b) === l) + '">' + LETTER_LABELS[l] + "</button>";
               }).join("") +
             "</div>" +
-            '<label class="check"><input type="checkbox" id="stickerToggle"' + (stickerOn(b) ? " checked" : "") + ">Rental sticker</label>" +
+            '<label class="check only-box"><input type="checkbox" id="stickerToggle"' + (stickerOn(b) ? " checked" : "") + ">Rental sticker</label>" +
+          "</div>" +
+          '<div class="grad-line only-bare">' +
+            '<span class="sub-label">Label</span>' +
+            '<div class="seg" id="labelSeg">' +
+              LABELS.map(function(l){
+                return '<button type="button" data-label="' + l + '" aria-pressed="' +
+                  (labelOf(b) === l) + '">' + LABEL_NAMES[l] + "</button>";
+              }).join("") +
+            "</div>" +
+            '<label class="check"><input type="checkbox" id="scrawlToggle"' + (scrawlOn(b) ? " checked" : "") + ">Creepy notes</label>" +
           "</div>" +
 
           paintBlockHTML("spine", "Spine colour", color(b), spineTo(b), spineAngle(b)) +
@@ -4179,8 +4519,10 @@ function openTape(id, isNew){
     Array.prototype.forEach.call(this.querySelectorAll("[data-finish]"), function(x){
       x.setAttribute("aria-pressed", String(x.getAttribute("data-finish") === b.finish));
     });
-    /* Finish carries defaults for lettering and hubs; reflect them where the
-       tape has not overridden them. */
+    /* Finish carries defaults for lettering and the sticker; reflect them where
+       the tape has not overridden them, and show only the controls this kind
+       of tape has. */
+    byId("appearBody").setAttribute("data-bare", finishOf(b) === "bare" ? "1" : "0");
     Array.prototype.forEach.call(byId("letterSeg").querySelectorAll("[data-lettering]"), function(x){
       x.setAttribute("aria-pressed", String(x.getAttribute("data-lettering") === letteringOf(b)));
     });
@@ -4199,6 +4541,19 @@ function openTape(id, isNew){
   byId("stickerToggle").addEventListener("change", function(){
     b.sticker = this.checked;
     saveTape(b); render();
+  });
+  byId("labelSeg").addEventListener("click", function(e){
+    var btn = e.target.closest("[data-label]");
+    if(!btn) return;
+    b.label = btn.getAttribute("data-label");
+    Array.prototype.forEach.call(this.querySelectorAll("[data-label]"), function(x){
+      x.setAttribute("aria-pressed", String(x.getAttribute("data-label") === b.label));
+    });
+    saveTape(b); render(); refreshPreview();
+  });
+  byId("scrawlToggle").addEventListener("change", function(){
+    b.scrawl = this.checked;
+    saveTape(b); render(); refreshPreview();
   });
 
   /* ---- appearance: tapemark colour and status dot ---- */
@@ -4737,6 +5092,8 @@ function normalizeTape(raw){
   if(FINISHES.indexOf(b.finish) === -1) delete b.finish;
   if(LETTERINGS.indexOf(b.lettering) === -1) delete b.lettering;
   if(typeof b.sticker !== "boolean") delete b.sticker;
+  if(LABELS.indexOf(b.label) === -1) delete b.label;
+  if(typeof b.scrawl !== "boolean") delete b.scrawl;
   ["part","year","runtime","progress"].forEach(function(k){
     if(b[k] == null) return;
     var n = parseFloat(b[k]);
@@ -5003,7 +5360,8 @@ var BULK_ROWS = [
   {key:"width",       label:"Spine thickness",   fields:["spineWidth"]},
   {key:"display",     label:"Shelf display",     fields:["display"]},
   {key:"finish",      label:"Finish",            fields:["finish","sticker"]},
-  {key:"lettering",   label:"Lettering",         fields:["lettering"]}
+  {key:"lettering",   label:"Lettering",         fields:["lettering"]},
+  {key:"label",       label:"Tape label",        fields:["label","scrawl"]}
 ];
 function cloneVal(v){ return (v && typeof v === "object") ? JSON.parse(JSON.stringify(v)) : v; }
 function segValue(id, attr){
@@ -5088,6 +5446,14 @@ function bulkRowHTML(row, b){
         }).join("") + "</div>" +
         '<label class="check"><input type="checkbox" id="bkSticker"' + (stickerOn(b) ? " checked" : "") + ">Rental sticker</label>";
       break;
+    case "label":
+      ctl = '<div class="seg" id="bkLabelSeg">' +
+        LABELS.map(function(l){
+          return '<button type="button" data-bulklabel="' + l + '" aria-pressed="' +
+            (labelOf(b) === l) + '">' + LABEL_NAMES[l] + "</button>";
+        }).join("") + "</div>" +
+        '<label class="check"><input type="checkbox" id="bkScrawl"' + (scrawlOn(b) ? " checked" : "") + ">Creepy notes</label>";
+      break;
     case "lettering":
       ctl = '<div class="seg" id="bkLetterSeg">' +
         LETTERINGS.map(function(l){
@@ -5130,6 +5496,7 @@ function openBulk(){
   wireSeg("bkDisplaySeg", "data-bulkdisplay");
   wireSeg("bkFinishSeg", "data-bulkfinish");
   wireSeg("bkLetterSeg", "data-bulkletter");
+  wireSeg("bkLabelSeg", "data-bulklabel");
   [["bkSpineAngle","bkSpineAngleOut",function(v){ return v + "°"; }],
    ["bkCoverAngle","bkCoverAngleOut",function(v){ return v + "°"; }],
    ["bkSize","bkSizeOut",function(v){ return Math.round(v*100) + "%"; }],
@@ -5171,6 +5538,8 @@ function openBulk(){
     setSeg("bkDisplaySeg", "data-bulkdisplay", displayMode(b));
     setSeg("bkFinishSeg", "data-bulkfinish", finishOf(b));
     setSeg("bkLetterSeg", "data-bulkletter", letteringOf(b));
+    setSeg("bkLabelSeg", "data-bulklabel", labelOf(b));
+    byId("bkScrawl").checked = scrawlOn(b);
     byId("bkSticker").checked = stickerOn(b);
   }
   byId("bulkFrom").addEventListener("change", function(){
@@ -5222,7 +5591,9 @@ function applyBulk(){
     height: parseFloat(byId("bkHeight").value),
     width: parseFloat(byId("bkWidth").value),
     display: segValue("bkDisplaySeg", "data-bulkdisplay") || "spine",
-    finish: segValue("bkFinishSeg", "data-bulkfinish") || "rental",
+    finish: segValue("bkFinishSeg", "data-bulkfinish") || "bare",
+    label: segValue("bkLabelSeg", "data-bulklabel") || "masking",
+    scrawl: byId("bkScrawl").checked,
     sticker: byId("bkSticker").checked,
     lettering: segValue("bkLetterSeg", "data-bulkletter") || "printed"
   };
@@ -5253,7 +5624,8 @@ function applyBulk(){
     width:    function(b){ b.spineWidth = v.width; },
     display:  function(b){ b.display = v.display; },
     finish:   function(b){ b.finish = v.finish; b.sticker = v.sticker; },
-    lettering:function(b){ b.lettering = v.lettering; }
+    lettering:function(b){ b.lettering = v.lettering; },
+    label:    function(b){ b.label = v.label; b.scrawl = v.scrawl; }
   };
 
   var fields = [];
