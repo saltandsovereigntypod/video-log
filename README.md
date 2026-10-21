@@ -38,13 +38,22 @@ with every feature that has, reworked for movies and dressed for horror.
 - **Spine and box say different things.** Two checkbox rows decide which of
   title / director / franchise / part number / rating pips appear on the spine
   and which on the box.
-- **Tapes that look like tapes.** Five cases: **ex-rental** (scuffed, scratched,
-  with the shop's barcode sticker; the default), **slipcase** (matte cardboard),
-  **clamshell** (print under a clear plastic sleeve, with a glare stripe and a
-  moulded rim), **foil** (a collector's rainbow sheen) and **glossy**. Three
-  lettering treatments: printed, eighties **chrome**, and **neon**. A generated
-  box has a sliced synth-sun over the title, a VHS badge and the three-stripe
-  band along the foot.
+- **Tapes that look like tapes.** By default every film is a **bare cassette**,
+  out of its box: black plastic, grip ridges at each end, and a label somebody
+  stuck in the well down the spine and wrote on by hand, like a box of home
+  recordings found in a basement. The label is masking tape, a ruled stationery
+  sticker, duct tape or a half-peeled shop label; it is written in marker (black,
+  red, or pencil) with the title, franchise and part, director, year, runtime and
+  your rating as hand-drawn stars. Most carry a creepy note from whoever had the
+  tape before ("DO NOT WATCH", "found in the attic", "don't look at 47:12"),
+  sometimes crossed out, and some have coffee rings, fingerprints or a spatter of
+  blood. Label, ink, tilt, note and stains are seeded from each tape's id, so a
+  tape looks the same every time; you can pick the label and ink yourself, or turn
+  the notes off. Stood front-out, a bare tape shows the cassette's face, with the
+  tape on its two reels moving across as you watch it.
+  Or put a tape in a box: **ex-rental** (scuffed, with the shop's barcode
+  sticker), **slipcase**, **clamshell**, **foil** or **glossy**, lettered printed,
+  eighties **chrome** or **neon**, with generated synth-sun box art.
 - **Three ways to stand.** Spine out, front out, or **angled**, in real CSS 3D,
   planted on the shelf with a contact shadow.
 - **Or lay a group flat.** Any group can be a **stack** of tapes lying on their
@@ -174,7 +183,8 @@ One visual world, not a light/dark pair: a video store after midnight. Near-blac
 with red neon spill, a cyan on-screen-display accent, CRT scanlines over
 everything and a tracking band that rolls down the screen now and then. Type is
 **Creepster** for the sign, titles and box art, **Oswald** (condensed, like real
-VHS spines) for spines and labels, **Courier Prime** for body text and the rental
+VHS spines) for box spines and labels, **Permanent Marker** and **Caveat** for
+the hand-written tape labels, **Courier Prime** for body text and the rental
 card, and **VT323** for the VCR-style numbers. No frameworks, no build step for
 the app itself, no external requests beyond Google Fonts.
 
@@ -207,9 +217,9 @@ One document per tape:
     { "id": "s1a2b-1x", "label": "Notes", "text": "" }
   ],
   "display": "spine",
-  "finish": "rental",
-  "lettering": "printed",
-  "sticker": true,
+  "finish": "bare",
+  "lettering": "marker",
+  "label": "masking",
   "coverId": null,
   "coverImage": false,
   "spineImage": false,
@@ -230,11 +240,14 @@ One document per tape:
 unknown.
 
 Appearance fields are optional and fall back to values derived from the title
-and franchise. `finish` is `rental`, `slipcase`, `clamshell`, `foil` or `glossy`
-(default `rental`); `lettering` is `printed`, `chrome` or `neon` and, when absent,
+and franchise. `finish` is `bare`, `rental`, `slipcase`, `clamshell`, `foil` or
+`glossy` (default `bare`); `lettering` is `printed`, `chrome` or `neon` and, when absent,
 is chrome on foil and printed everywhere else; `sticker` absent means the rental
 barcode sticker shows on ex-rentals only. `display` is `spine`, `front` or
-`angle`. `ribbonColor` is the staff-pick tag a favourite wears. Group layout lives
+`angle`. For a bare tape (`finish` `bare`, the default) `lettering` is `marker`,
+`red` or `pencil`; `label` is `masking`, `sticker`, `duct` or `torn`, chosen from
+the id when absent; `scrawl` false hides the creepy note. A bare tape ignores the
+genre tint the Oracle gives a rented tape, so it stays black plastic. `ribbonColor` is the staff-pick tag a favourite wears. Group layout lives
 in the settings record as `groupLayout` and `defaultGroupLayout`.
 
 A tape the Oracle rented you also carries `oracleTags`: the catalogue id and the
