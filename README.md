@@ -45,8 +45,10 @@ with every feature that has, reworked for movies and dressed for horror.
   recordings found in a basement. The label is masking tape, a ruled stationery
   sticker, duct tape or a half-peeled shop label, with paper fibre and edges and
   ink that wobble the way hand-made things do. Each tape was labelled by one of
-  four different hands, in marker (black, red, or pencil), with the title,
-  franchise and part, director, year, runtime and your rating as drawn stars.
+  four different hands, in marker (black, red, or pencil). The title is written
+  big, across the full width of the spine, down the top of the label; the
+  franchise and part, director, year, runtime and your rating as drawn stars run
+  below it in small writing.
 - **Creepy.** Many tapes are **taped-over home movies**: the old label ("Jenny's
   7th bday", "Grandma's last visit") struck out in ballpoint with the film
   written beside it. Others carry a note from whoever had the tape before ("it
@@ -57,7 +59,8 @@ with every feature that has, reworked for movies and dressed for horror.
   the label and ink yourself, or turn the notes off. Stood front-out, a bare tape
   shows the cassette's face, with the tape on its two reels moving across as you
   watch it.
-- **Atmosphere.** Film grain over everything, a fluorescent tube that fails now
+- **Atmosphere.** A fluorescent tube on the back wall that never quite holds
+  steady, its light spilling down behind the shelves; film grain over everything, a fluorescent tube that fails now
   and then, a VCR on-screen display whose clock shows tonight's time in 1987, a
   sign that loses tracking, and tapes that glitch as you reach for them. Settings
   can switch it off; it is always off for reduced motion.

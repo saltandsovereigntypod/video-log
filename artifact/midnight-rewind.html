@@ -442,6 +442,30 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
 .tl-note.x{text-decoration:line-through;text-decoration-thickness:1.5px}
 .let-pencil .tl-title{font-family:"Caveat",cursive;font-weight:700;font-size:calc(var(--fs) * 1.2);opacity:.85;text-shadow:none}
 .let-pencil .tl-meta,.let-pencil .tl-note{opacity:.75}
+/* On a spine: the title down the top of the label at full width, the rest
+   below it in small writing that wraps from line to line across the spine. */
+.tlabel.stacked{
+  writing-mode:horizontal-tb;display:flex;flex-direction:column;align-items:center;padding:8px 2px 6px;
+}
+.tlabel.stacked > span.tl-title{
+  writing-mode:vertical-rl;flex:0 0 auto;max-height:var(--room);max-width:100%;
+  white-space:nowrap;text-align:center;line-height:1.08;
+}
+.tlabel.stacked.two > span.tl-title{white-space:normal;line-height:1.02;text-wrap:balance}
+.hand-scratch.stacked > span.tl-title{line-height:1.3}
+.tlabel.stacked.lab-torn{padding-top:40px}
+
+.tl-rest{
+  writing-mode:vertical-rl;flex:1 1 auto;min-height:0;max-width:100%;overflow:hidden;
+  margin-top:7px;position:relative;z-index:2;line-height:1.05;
+}
+.tl-rest > span{display:block;white-space:normal}
+.tlabel.stacked .tl-meta{font-size:10.5px}
+.tlabel.stacked .tl-stars{font-size:10px}
+.tlabel.stacked .tl-note,.tlabel.stacked .tl-old{font-size:10.5px}
+.hand-scrawl.stacked .tl-meta,.hand-scrawl.stacked .tl-note,.hand-scrawl.stacked .tl-old{font-size:13px}
+.hand-neat.stacked .tl-meta,.hand-neat.stacked .tl-note{font-size:11.5px}
+
 
 /* Masking tape: translucent buff paper, torn at both ends. */
 .lab-masking{
@@ -615,6 +639,41 @@ width:calc(var(--cw) * .035);height:calc(var(--cw) * .035);border-radius:50%;z-i
 .cass-screw.s3{left:2.5%;bottom:6%}
 .cass-screw.s4{right:2.5%;bottom:6%}
 .faced .cass-front,.ang-front .cass-front{border-radius:inherit}
+
+/* ---------- the tube ----------
+   A fluorescent tube high on the back wall, never quite steady: it hums along
+   a little dim and a little bright, and every so often stutters. Its light
+   spills down the wall behind the shelves. Subtle by design; it is the room,
+   not an effect. */
+.tube{
+  position:absolute;top:-22px;left:50%;width:min(560px,70%);height:7px;transform:translateX(-50%);
+  border-radius:4px;z-index:0;pointer-events:none;
+  background:linear-gradient(180deg,#F4FFFB,#C9F2E6 60%,#8FC9BA);
+  box-shadow:0 0 6px rgba(220,255,245,.9), 0 0 22px rgba(170,255,230,.45), 0 0 60px rgba(150,240,220,.25);
+  animation:hum 7.3s linear infinite;
+}
+.tube::before,.tube::after{
+  content:"";position:absolute;top:-3px;width:10px;height:13px;border-radius:2px;background:#2a2a2e;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+}
+.tube::before{left:-8px}
+.tube::after{right:-8px}
+.tube-light{
+  position:fixed;left:0;right:0;top:0;height:85vh;z-index:0;pointer-events:none;
+  background:radial-gradient(60% 70% at 50% 0%, rgba(170,255,232,.10), rgba(170,255,232,.035) 45%, transparent 75%);
+  mix-blend-mode:screen;
+  animation:hum 7.3s linear infinite;
+}
+@keyframes hum{
+  0%{opacity:.9} 8%{opacity:.82} 9%{opacity:.35} 9.6%{opacity:.88} 10.2%{opacity:.4} 11%{opacity:.92}
+  27%{opacity:.85} 41%{opacity:.95} 55%{opacity:.8} 63%{opacity:.88}
+  71%{opacity:.86} 71.5%{opacity:.25} 72.4%{opacity:.75} 73%{opacity:.3} 74.5%{opacity:.9}
+  88%{opacity:.84} 100%{opacity:.9}
+}
+body.app .tube{display:none}
+body.calm .tube,body.calm .tube-light{animation:none;opacity:.85}
+@media (prefers-reduced-motion:reduce){.tube,.tube-light{animation:none;opacity:.85}}
+.masthead{position:relative}
 
 /* ---------- atmosphere ----------
    Film grain over everything, a fluorescent tube on its way out, the VCR's
@@ -1776,6 +1835,7 @@ body.app #oracleOverlay .or-actions .btn{min-height:48px}
   </filter>
 </svg>
 <div class="chamber" aria-hidden="true"></div>
+<div class="tube-light" aria-hidden="true"></div>
 <div class="film-grain" aria-hidden="true"></div>
 <div class="lamp" id="lamp" aria-hidden="true"></div>
 <div class="osd" aria-hidden="true"><div><b>&#9654;</b> PLAY &nbsp;SP</div><div id="osdClock"></div></div>
@@ -1789,6 +1849,8 @@ body.app #oracleOverlay .or-actions .btn{min-height:48px}
 
 <div class="wrap">
   <header class="masthead">
+    <span class="tube" aria-hidden="true"></span>
+
     <svg class="crest" viewBox="0 0 24 24" aria-hidden="true">
       <rect x="2" y="6" width="20" height="12" rx="1.2"/>
       <circle cx="7.4" cy="12" r="2.6"/><circle cx="16.6" cy="12" r="2.6"/>
@@ -2702,7 +2764,7 @@ function coverShow(b){
    than a sleeve, and how fat the case is. The lettering is fitted to the room
    instead (see spineFontSize). */
 var COVER_RATIO = 0.56;
-var BOX_W = {bare:60, rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
+var BOX_W = {bare:44, rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
 function autoH(b){
   var f = finishOf(b);
   return (f === "clamshell" ? 266 : f === "bare" ? 252 : 258) + (hash(b.id) % 3);
@@ -3738,34 +3800,48 @@ function tapedOverHTML(b){
   var old = tapedOverOf(b);
   return old ? '<span class="tl-old">' + esc(old) + "</span>" : "";
 }
+/* The title owns the label. It is written big, across the full width of the
+   spine, down the top of the label; the details, stars and notes go below it
+   in small writing, further down the tape, the way a careful hand labels a
+   spine it cannot make any wider. */
 function bareSpineHTML(b, h, s){
-  var len = h - 58;                              /* the label, end to end */
+  var len = h - 56 - 15;                         /* the label, end to end, inside its padding */
+  var across = spineW(b) - 12;                   /* and across */
   var title = b.title || "Untitled";
   var chars = Math.max(1, title.length);
-  var hand = HANDS[handOf(b)], old = tapedOverOf(b);
-  /* Past what one line can hold at a readable size, the title wraps onto a
-     second, and the note, or the crossed-out home movie, gives way. */
-  var one = len / (chars * hand.width);
-  var two = one < 10 * hand.scale;
-  var fs = two ? Math.min(12 * hand.scale, (len * 2) / (chars * hand.width * 1.03))
-               : Math.min(19 * hand.scale, 21, one);
+  var hand = HANDS[handOf(b)];
   var details = labelDetails(b, s), stars = s.pips ? starText(b) : "";
-  /* And across: the title's line, or two, must leave room on the label for
-     the details, the stars and whatever was scrawled there first. */
-  var across = spineW(b) - 12 - (details.length ? 14 : 0) - (stars ? 12 : 0) -
-    (!two && (old || scrawlOn(b)) ? 14 : 0);
-  fs = Math.min(fs, across / (two ? 2.1 : 1.12));
+  var rest = (details.length || stars || tapedOverOf(b) || scrawlOn(b)) ? 74 : 0;
+  /* A torn label has lost its top corner; the writing starts below the tear. */
+  if(labelOf(b) === "torn") len -= Math.round(len * 0.2);
+  var room = len - rest;                         /* the length the title may use */
+  /* A line can be no taller than the spine is wide. Rock Salt stands taller
+     in its line than the others; the small-bodied hands may run a little
+     larger before they fill it. */
+  var lead = handOf(b) === "scratch" ? 1.3 : 1.08;
+  var cap = across / lead * (hand.scale > 1 ? 1.15 : 1);
+  var one = room / (chars * hand.width);
+  /* One line or two, whichever writes the title bigger. Handwriting wraps less
+     tidily than it measures (a word that will not fit at the end of a line
+     pushes to the next), so two lines are budgeted at well under twice one,
+     and only win when they are clearly larger. */
+  var fs1 = Math.min(cap, one * 0.96);
+  var fs2 = chars > 6 ? Math.min(cap / 2.05, (room * 2) / (chars * hand.width) * 0.8) : 0;
+  var two = fs2 > fs1 * 1.12;
+  var fs = two ? fs2 : fs1;
   fs = Math.max(7.5, fs) * textScale(b);
   return '<span class="bare-grip top"></span><span class="bare-grip bot"></span><span class="bare-well"></span>' +
     plasticWearHTML(b) +
-    '<span class="' + labelClass(b, two ? " two" : "") + '" style="--tilt:' + labelTilt(b) +
-      'deg;--fs:' + fs.toFixed(2) + 'px">' +
+    '<span class="' + labelClass(b, " stacked" + (two ? " two" : "")) + '" style="--tilt:' + labelTilt(b) +
+      'deg;--fs:' + fs.toFixed(2) + 'px;--room:' + Math.round(room) + 'px">' +
       stainsHTML(b) +
-      (two ? "" : tapedOverHTML(b)) +
       (s.title ? '<span class="tl-title">' + esc(title) + "</span>" : "") +
-      (details.length ? '<span class="tl-meta">' + esc(details.join(" \u00B7 ")) + "</span>" : "") +
-      (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
-      (two || old ? "" : noteHTML(b, "tl-note")) +
+      '<span class="tl-rest">' +
+        tapedOverHTML(b) +
+        (details.length ? '<span class="tl-meta">' + esc(details.join(" · ")) + "</span>" : "") +
+        (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
+        noteHTML(b, "tl-note") +
+      "</span>" +
     "</span>";
 }
 /* The face of the cassette, for a tape stood front-out or turned on the shelf.
