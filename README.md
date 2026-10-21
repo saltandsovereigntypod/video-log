@@ -39,18 +39,28 @@ with every feature that has, reworked for movies and dressed for horror.
   title / director / franchise / part number / rating pips appear on the spine
   and which on the box.
 - **Tapes that look like tapes.** By default every film is a **bare cassette**,
-  out of its box: black plastic, grip ridges at each end, and a label somebody
+  out of its box: matte moulded black plastic with gripping ridges, the seam
+  between the shell halves, dust, scuffs and worn corners, and a label somebody
   stuck in the well down the spine and wrote on by hand, like a box of home
   recordings found in a basement. The label is masking tape, a ruled stationery
-  sticker, duct tape or a half-peeled shop label; it is written in marker (black,
-  red, or pencil) with the title, franchise and part, director, year, runtime and
-  your rating as hand-drawn stars. Most carry a creepy note from whoever had the
-  tape before ("DO NOT WATCH", "found in the attic", "don't look at 47:12"),
-  sometimes crossed out, and some have coffee rings, fingerprints or a spatter of
-  blood. Label, ink, tilt, note and stains are seeded from each tape's id, so a
-  tape looks the same every time; you can pick the label and ink yourself, or turn
-  the notes off. Stood front-out, a bare tape shows the cassette's face, with the
-  tape on its two reels moving across as you watch it.
+  sticker, duct tape or a half-peeled shop label, with paper fibre and edges and
+  ink that wobble the way hand-made things do. Each tape was labelled by one of
+  four different hands, in marker (black, red, or pencil), with the title,
+  franchise and part, director, year, runtime and your rating as drawn stars.
+- **Creepy.** Many tapes are **taped-over home movies**: the old label ("Jenny's
+  7th bday", "Grandma's last visit") struck out in ballpoint with the film
+  written beside it. Others carry a note from whoever had the tape before ("it
+  isn't the movie anymore", "WE TAPED OVER IT. IT CAME BACK", "the face at
+  1:13:40"), and some have mug rings, fingerprints, bloody prints and smears,
+  water stains, a scorched end or a yellowing strip of Scotch tape. All of it is
+  seeded from each tape's id, so a tape looks the same every time; you can pick
+  the label and ink yourself, or turn the notes off. Stood front-out, a bare tape
+  shows the cassette's face, with the tape on its two reels moving across as you
+  watch it.
+- **Atmosphere.** Film grain over everything, a fluorescent tube that fails now
+  and then, a VCR on-screen display whose clock shows tonight's time in 1987, a
+  sign that loses tracking, and tapes that glitch as you reach for them. Settings
+  can switch it off; it is always off for reduced motion.
   Or put a tape in a box: **ex-rental** (scuffed, with the shop's barcode
   sticker), **slipcase**, **clamshell**, **foil** or **glossy**, lettered printed,
   eighties **chrome** or **neon**, with generated synth-sun box art.
@@ -183,8 +193,9 @@ One visual world, not a light/dark pair: a video store after midnight. Near-blac
 with red neon spill, a cyan on-screen-display accent, CRT scanlines over
 everything and a tracking band that rolls down the screen now and then. Type is
 **Creepster** for the sign, titles and box art, **Oswald** (condensed, like real
-VHS spines) for box spines and labels, **Permanent Marker** and **Caveat** for
-the hand-written tape labels, **Courier Prime** for body text and the rental
+VHS spines) for box spines and labels, **Permanent Marker**, **Rock Salt**,
+**Reenie Beanie**, **Covered By Your Grace** and **Caveat** for the hand-written
+tape labels, **Courier Prime** for body text and the rental
 card, and **VT323** for the VCR-style numbers. No frameworks, no build step for
 the app itself, no external requests beyond Google Fonts.
 
