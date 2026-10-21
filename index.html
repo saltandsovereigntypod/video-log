@@ -21,7 +21,7 @@
 <title>Midnight Rewind</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Permanent+Marker&family=Creepster&family=Oswald
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Permanent+Marker&family=Rock+Salt&family=Reenie+Beanie&family=Covered+By+Your+Grace&family=Creepster&family=Oswald
 :wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=VT323&display=swap">
 
 <style>
@@ -367,17 +367,53 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
    end, a shallow well down the middle where somebody stuck a label and wrote
    on it. The plastic is the same leaf stack as any box, so a recoloured
    cassette keeps its sheen and grain. */
+:root{
+  /* Dust: sparse pale specks, only where the noise runs high. */
+  --dust:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 12 0 0 0 -8.7'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23d)'/%3E%3C/svg%3E");
+  /* Paper fibre: noise stretched along one axis. */
+  --fibers:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5 0.02' numOctaves='2' seed='9'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-.8'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-.8'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-.8'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23f)' opacity='.5'/%3E%3C/svg%3E");
+  /* Moulded plastic: a fine, hard stipple. */
+  --stipple:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.9' numOctaves='2' seed='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='3' intercept='-1'/%3E%3CfeFuncG type='linear' slope='3' intercept='-1'/%3E%3CfeFuncB type='linear' slope='3' intercept='-1'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='90' height='90' filter='url(%23s)' opacity='.3'/%3E%3C/svg%3E");
+  /* Film grain for the whole screen. */
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+}
 .fin-bare{
-  --grain:var(--grain-plastic);--grain-size:46px;
+  --grain:var(--stipple);--grain-size:60px;
   --sheen:linear-gradient(90deg, transparent 8%, rgba(255,255,255,.10) 15%, rgba(255,255,255,.03) 24%, transparent 32%);
   --leaf-base:linear-gradient(180deg, color-mix(in srgb, var(--c) 88%, white 12%), var(--c) 20%, color-mix(in srgb, var(--c) 85%, black 15%) 100%);
 }
-.spine.fin-bare{border-radius:3px}
+/* Chamfered edges catch the light; the far edge falls into shadow. */
+.spine.fin-bare{
+  border-radius:3px;
+  box-shadow:
+    inset 1px 0 0 rgba(255,255,255,.14), inset 2px 0 2px rgba(255,255,255,.04),
+    inset -1px 0 0 rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.18), inset 0 -1px 0 rgba(0,0,0,.6),
+    0 2px 0 rgba(0,0,0,.55), 0 3px 5px -1px rgba(0,0,0,.6), 0 12px 20px -10px rgba(0,0,0,.85);
+}
+.spine.fin-bare:hover,.spine.fin-bare:focus-visible{
+  box-shadow:inset 1px 0 0 rgba(255,255,255,.14), inset -1px 0 0 rgba(0,0,0,.7),
+    0 18px 30px -8px rgba(0,0,0,.9), 0 0 26px rgba(255,59,85,.25);
+}
 .fin-bare.spine-body::before,.fin-bare.spine-body::after{content:none}
 .fin-bare .sp-sticker{display:none}
+/* Gripping ridges, with the seam where the two halves of the shell meet
+   running down through them. */
 .bare-grip{
   position:absolute;left:3px;right:3px;height:20px;z-index:2;border-radius:1px;
-  background:repeating-linear-gradient(180deg, rgba(255,255,255,.08) 0 1px, rgba(0,0,0,.45) 1px 3px);
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), rgba(0,0,0,.75) calc(50% - 1px) calc(50% + .5px), rgba(255,255,255,.07) calc(50% + .5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+    repeating-linear-gradient(180deg, rgba(255,255,255,.09) 0 1px, rgba(0,0,0,.5) 1px 3px);
+}
+/* Dust settled on the shell, a scuff or two, and worn corners. */
+.bare-wear{
+  position:absolute;inset:0;z-index:5;pointer-events:none;border-radius:inherit;
+  background:
+    linear-gradient(var(--sa), transparent calc(var(--sy) - 1px), rgba(255,255,255,.16) var(--sy), transparent calc(var(--sy) + 1.2px)),
+    linear-gradient(var(--sb), transparent 61%, rgba(255,255,255,.09) 61.4%, transparent 62.2%),
+    radial-gradient(7px 7px at 0 0, rgba(255,255,255,.18), transparent),
+    radial-gradient(7px 7px at 100% 100%, rgba(255,255,255,.1), transparent),
+    var(--dust) 0 0 / 140px;
+  opacity:.5;mix-blend-mode:screen;
 }
 .bare-grip.top{top:3px}
 .bare-grip.bot{bottom:3px}
@@ -397,7 +433,22 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
   writing-mode:vertical-rl;text-orientation:mixed;padding:9px 2px 7px;
   transform:rotate(var(--tilt,0deg));overflow:hidden;
   color:var(--ink,#141210);line-height:1.08;
+  /* Hand-drawn: the edges of the paper and of every stroke wobble a little,
+     the way ink and torn tape do and type never does. */
+  filter:url(#ink);
 }
+/* Four hands. Whoever labelled the tape wrote the title in their own way. */
+.hand-scratch .tl-title{font-family:"Rock Salt",cursive;letter-spacing:-.02em;line-height:1.25}
+.hand-scrawl .tl-title{font-family:"Reenie Beanie",cursive;font-weight:400;letter-spacing:.02em;text-shadow:0 0 .4px var(--ink)}
+.hand-neat .tl-title{font-family:"Covered By Your Grace",cursive;letter-spacing:.03em}
+.hand-scrawl .tl-meta,.hand-scrawl .tl-note{font-family:"Reenie Beanie",cursive;font-weight:400;font-size:14px}
+.hand-neat .tl-meta,.hand-neat .tl-note{font-family:"Covered By Your Grace",cursive;font-size:12.5px}
+/* The home movie that was there first, struck out in ballpoint. */
+.tl-old{
+  font-family:"Caveat",cursive;font-weight:500;font-size:11.5px;color:#2B3E8C;opacity:.85;margin-left:1px;
+  text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ink,#141210);
+}
+.hand-scrawl .tl-old{font-family:"Reenie Beanie",cursive;font-size:14px}
 .tlabel > span{display:block;white-space:nowrap;overflow:hidden;text-overflow:clip;position:relative;z-index:2}
 .tl-title{
   font-family:"Permanent Marker","Comic Sans MS",cursive;font-size:var(--fs);letter-spacing:.01em;
@@ -414,8 +465,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
 
 /* Masking tape: translucent buff paper, torn at both ends. */
 .lab-masking{
-  background:var(--grain-card) 0 0/60px, linear-gradient(90deg, rgba(0,0,0,.07), transparent 25%, transparent 75%, rgba(0,0,0,.09)), #DCCB9C;
-  background-blend-mode:overlay, normal, normal;
+  background:var(--fibers) 0 0/120px, var(--grain-card) 0 0/60px,
+    radial-gradient(120% 40% at 30% 30%, rgba(255,250,230,.25), transparent 60%),
+    linear-gradient(90deg, rgba(0,0,0,.08), transparent 25%, transparent 75%, rgba(0,0,0,.1)), #D6C392;
+  background-blend-mode:soft-light, overlay, normal, normal, normal;
   opacity:.95;left:2px;right:2px;
   clip-path:polygon(0 1.5%,14% 0,29% 2.2%,45% .4%,62% 2%,79% 0,100% 1.6%,100% 98.4%,86% 100%,71% 97.8%,53% 99.6%,36% 98%,19% 100%,0 98.2%);
 }
@@ -425,8 +478,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
   background:
     repeating-linear-gradient(90deg, transparent 0 12px, rgba(70,110,170,.32) 12px 13px),
     linear-gradient(90deg, transparent calc(100% - 6px), rgba(190,40,50,.55) calc(100% - 6px) calc(100% - 5px), transparent calc(100% - 5px)),
-    radial-gradient(140% 70% at 50% 50%, transparent 55%, rgba(160,120,40,.28) 100%),
-    #EFE9DA;
+    radial-gradient(140% 70% at 50% 50%, transparent 50%, rgba(160,120,40,.34) 100%),
+    var(--fibers) 0 0/140px,
+    #EBE3D0;
+  background-blend-mode:normal, normal, normal, soft-light, normal;
   border-radius:3px;top:30px;bottom:30px;
   box-shadow:0 0 0 1px rgba(0,0,0,.18);
 }
@@ -443,8 +498,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
 .lab-torn{
   background:
     linear-gradient(180deg, transparent 0, transparent 100%),
-    radial-gradient(160% 60% at 50% 100%, rgba(150,110,40,.22), transparent 60%),
-    #EDE8DE;
+    radial-gradient(160% 60% at 50% 100%, rgba(150,110,40,.26), transparent 60%),
+    var(--fibers) 0 0/140px,
+    #E8E2D4;
+  background-blend-mode:normal, normal, soft-light, normal;
   border-radius:2px;
   clip-path:polygon(0 16%,22% 12%,38% 15%,55% 8%,72% 6%,100% 0,100% 100%,0 100%);
   padding-top:22%;
@@ -460,9 +517,42 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
 }
 .tl-print{
   position:absolute;z-index:1;width:18px;height:24px;left:22%;top:16%;border-radius:50%;transform:rotate(25deg);
-  background:repeating-radial-gradient(ellipse at 50% 60%, rgba(20,16,14,.16) 0 1px, transparent 1px 2.6px);
+  background:repeating-radial-gradient(ellipse at 50% 60%, rgba(20,16,14,.18) 0 1px, transparent 1px 2.6px);
   -webkit-mask:radial-gradient(closest-side, #000 70%, transparent);mask:radial-gradient(closest-side, #000 70%, transparent);
 }
+.tl-print.blood{z-index:3;left:auto;right:6%;top:58%;transform:rotate(-15deg);
+  background:repeating-radial-gradient(ellipse at 50% 60%, rgba(115,8,14,.55) 0 1.1px, transparent 1.1px 2.6px)}
+/* Dried blood dragged across the label by a finger. */
+.tl-smear{
+  position:absolute;z-index:3;left:-10%;right:-10%;top:40%;height:26%;pointer-events:none;transform:rotate(-8deg);
+  background:linear-gradient(100deg, transparent 4%, rgba(100,8,12,.6) 14%, rgba(122,14,20,.42) 46%, rgba(110,10,16,.22) 70%, transparent 88%);
+  -webkit-mask:var(--fibers) 0 0/90px;mask:var(--fibers) 0 0/90px;
+}
+/* Where a glass of water sat on it, or the box got wet in the basement. */
+.tl-water{
+  position:absolute;z-index:1;left:-20%;right:-20%;top:5%;height:60%;pointer-events:none;
+  background:radial-gradient(ellipse 60% 55% at 45% 60%, rgba(150,110,50,.10) 0 62%, rgba(110,72,28,.38) 66%, rgba(110,72,28,.1) 70%, transparent 74%);
+}
+/* One end scorched: it was nearly burned with the others. */
+.tl-burn{
+  position:absolute;z-index:3;left:0;right:0;bottom:0;height:24%;pointer-events:none;
+  background:linear-gradient(0deg, rgba(14,8,4,.97) 0, rgba(40,18,6,.88) 18%, rgba(96,48,14,.5) 46%, rgba(140,90,30,.2) 70%, transparent);
+  clip-path:polygon(0 30%,12% 18%,24% 34%,38% 10%,52% 28%,66% 6%,80% 24%,92% 12%,100% 22%,100% 100%,0 100%);
+}
+.tlabel.horiz .tl-burn{left:auto;top:0;width:20%;height:auto;
+  background:linear-gradient(270deg, rgba(14,8,4,.97) 0, rgba(40,18,6,.88) 18%, rgba(96,48,14,.5) 46%, rgba(140,90,30,.2) 70%, transparent);
+  clip-path:polygon(28% 0,100% 0,100% 100%,20% 100%,10% 84%,30% 66%,14% 50%,32% 32%,12% 16%)}
+/* A strip of Scotch tape holding the label down, gone yellow and lifting. */
+.tl-scotch{
+  position:absolute;z-index:4;left:-6px;right:-6px;top:22%;height:15px;pointer-events:none;transform:rotate(3deg);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.06) 40%, rgba(255,240,180,.12) 100%),
+    var(--dust) 0 0/70px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(0,0,0,.08);
+  mix-blend-mode:screen;opacity:.85;
+}
+.tlabel.horiz .tl-scotch{left:58%;right:auto;top:-10%;bottom:-10%;width:18px;height:auto;transform:rotate(6deg);
+  background:linear-gradient(90deg, rgba(255,255,255,.28), rgba(255,255,255,.06) 40%, rgba(255,240,180,.12) 100%)}
 .tl-blood{
   position:absolute;z-index:3;width:26px;height:40px;right:-2px;top:34%;pointer-events:none;
   background:
@@ -524,13 +614,89 @@ input:focus,select:focus,textarea:focus{border-color:var(--neon-dim);box-shadow:
     radial-gradient(circle, #EDEAE2 0 calc(var(--hub) * .26), #2a211b calc(var(--hub) * .26) calc(var(--hub) * .5), transparent calc(var(--hub) * .5)),
     repeating-radial-gradient(circle, #3b2a1f 0 1px, #2c1f17 1px 2px);
 }
-.cass-screw{position:absolute;width:calc(var(--cw) * .035);height:calc(var(--cw) * .035);border-radius:50%;z-index:2;
+/* Tape guide posts, the write-protect tab, the moulded mark and the grip
+   ridges along the bottom edge of the shell. */
+.cass-post{position:absolute;top:12%;width:calc(var(--cw) * .05);height:calc(var(--cw) * .05);border-radius:50%;
+  background:radial-gradient(circle at 40% 35%, #d8d4cc, #5a5650 70%)}
+.cass-post.p1{left:4%}
+.cass-post.p2{right:4%}
+.cass-tab{position:absolute;left:1.5%;top:62%;width:4%;height:12%;border-radius:1px;z-index:2;
+  background:linear-gradient(180deg,#050505,#1a1a1a);box-shadow:inset 0 1px 2px rgba(0,0,0,.9)}
+.cass-emboss{position:absolute;left:6.5%;bottom:9%;z-index:2;font-style:normal;
+  font-family:var(--f-display);font-weight:700;font-size:calc(var(--cw) * .07);letter-spacing:.06em;
+  color:rgba(255,255,255,.07);text-shadow:0 -1px 0 rgba(0,0,0,.7), 0 1px 0 rgba(255,255,255,.08)}
+.cass-ridges{position:absolute;left:24%;right:24%;bottom:2%;height:5%;z-index:2;
+  background:repeating-linear-gradient(90deg, rgba(255,255,255,.09) 0 1px, rgba(0,0,0,.5) 1px 3px)}
+.cass-screw{position:absolute;
+width:calc(var(--cw) * .035);height:calc(var(--cw) * .035);border-radius:50%;z-index:2;
   background:radial-gradient(circle at 40% 35%, #8a8a8a, #2a2a2a 70%)}
 .cass-screw.s1{left:2.5%;top:6%}
 .cass-screw.s2{right:2.5%;top:6%}
 .cass-screw.s3{left:2.5%;bottom:6%}
 .cass-screw.s4{right:2.5%;bottom:6%}
 .faced .cass-front,.ang-front .cass-front{border-radius:inherit}
+
+/* ---------- atmosphere ----------
+   Film grain over everything, a fluorescent tube on its way out, the VCR's
+   on-screen display stuck in 1987. All of it ignores the pointer, sits under
+   the open tape and the sheets, and goes away with reduced motion or the
+   Atmosphere setting. */
+.film-grain{
+  position:fixed;inset:-50%;z-index:45;pointer-events:none;
+  background:var(--noise) 0 0/220px;opacity:.085;mix-blend-mode:overlay;
+  animation:grain .9s steps(6) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)} 17%{transform:translate(-4%,3%)} 33%{transform:translate(3%,-5%)}
+  50%{transform:translate(-6%,-2%)} 67%{transform:translate(5%,4%)} 83%{transform:translate(-2%,6%)} 100%{transform:translate(0,0)}
+}
+.lamp{
+  position:fixed;inset:0;z-index:44;pointer-events:none;background:#000;opacity:0;
+}
+.lamp.flick{animation:flick .9s linear 1}
+@keyframes flick{
+  0%{opacity:0} 6%{opacity:.62} 9%{opacity:.08} 14%{opacity:.7} 18%{opacity:.15} 24%{opacity:.78}
+  40%{opacity:.5} 52%{opacity:.04} 60%{opacity:.35} 68%{opacity:0} 100%{opacity:0}
+}
+.osd{
+  position:fixed;left:22px;bottom:18px;z-index:46;pointer-events:none;
+  font-family:var(--f-data);font-size:1.2rem;line-height:1.1;letter-spacing:.08em;color:#E8F0FF;
+  text-shadow:2px 0 0 rgba(255,40,80,.55), -2px 0 0 rgba(60,220,255,.45), 0 0 6px rgba(255,255,255,.35);
+  opacity:.6;
+}
+
+.osd b{font-weight:400;color:#fff;animation:blink 1.2s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* The sign takes a hit of tracking error every so often. */
+h1{position:relative}
+h1::after{
+  content:attr(data-text);position:absolute;inset:0;pointer-events:none;
+  color:transparent;text-shadow:3px 0 rgba(60,220,255,.55), -3px 0 rgba(255,30,70,.6);
+  clip-path:inset(42% 0 44% 0);transform:translateX(0);opacity:0;
+  animation:tear 7s steps(1) infinite;
+}
+@keyframes tear{
+  0%,91%,100%{opacity:0;transform:none}
+  92%{opacity:1;transform:translateX(-9px);clip-path:inset(18% 0 62% 0)}
+  94%{opacity:1;transform:translateX(7px);clip-path:inset(55% 0 28% 0)}
+  96%{opacity:1;transform:translateX(-4px);clip-path:inset(70% 0 12% 0)}
+}
+/* A tape you reach for loses tracking for a moment. */
+.spine:hover,.faced:hover,.angled:hover{animation:jolt .32s steps(2) 1}
+@keyframes jolt{
+  0%{filter:brightness(1.15) drop-shadow(2px 0 0 rgba(255,30,70,.6)) drop-shadow(-2px 0 0 rgba(60,220,255,.6))}
+  50%{filter:brightness(1.05) drop-shadow(-1px 0 0 rgba(255,30,70,.5)) drop-shadow(1px 0 0 rgba(60,220,255,.5))}
+  100%{filter:none}
+}
+body.app .osd{display:none}
+body.calm .film-grain,body.calm .lamp,body.calm .osd{display:none}
+body.calm h1::after,body.calm h1{animation:none}
+body.calm .spine:hover,body.calm .faced:hover,body.calm .angled:hover{animation:none}
+@media (prefers-reduced-motion:reduce){
+  .film-grain{animation:none}
+  .lamp{display:none}
+  h1::after,.spine:hover,.faced:hover,.angled:hover{animation:none}
+}
 
 /* Only the controls a tape of this kind has. */
 [data-bare="1"] .only-box,[data-bare="0"] .only-bare{display:none!important}
@@ -1764,7 +1930,18 @@ body.app #oracleOverlay .or-actions .btn{min-height:48px}
   <symbol id="ic-drop" viewBox="0 0 24 24"><path d="M12 2.4 6.6 9.8a6.8 6.8 0 1 0 10.8 0zM12 6l3.8 5.3a4.7 4.7 0 1 1-7.6 0z"/></symbol>
 </svg>
 
+<svg class="fx-defs" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <!-- Ink and torn edges: a little noise displaces every stroke and every edge
+       of a hand-made label, so nothing on it is ruler-straight. -->
+  <filter id="ink" x="-8%" y="-8%" width="116%" height="116%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="2" seed="11" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
 <div class="chamber" aria-hidden="true"></div>
+<div class="film-grain" aria-hidden="true"></div>
+<div class="lamp" id="lamp" aria-hidden="true"></div>
+<div class="osd" aria-hidden="true"><div><b>&#9654;</b> PLAY &nbsp;SP</div><div id="osdClock"></div></div>
 <div class="motes" id="motes" aria-hidden="true"><span class="tracking"></span></div>
 
 <header class="appbar" id="appBar">
@@ -1780,7 +1957,8 @@ body.app #oracleOverlay .or-actions .btn{min-height:48px}
       <circle cx="7.4" cy="12" r="2.6"/><circle cx="16.6" cy="12" r="2.6"/>
       <path d="M10 12h4M5 18l1.6-2.6h10.8L19 18"/>
     </svg>
-    <h1>Midnight Rewind</h1>
+    <h1 data-text="Midnight Rewind">Midnight Rewind</h1>
+
     <div class="rule"><i></i><svg viewBox="0 0 24 24"><use href="#ic-skull"/></svg><i></i></div>
     <p class="tagline">Horror on VHS &middot; <b>Be kind, rewind</b></p>
   </header>
@@ -1988,6 +2166,7 @@ var state = {
   defaultSections:DEFAULT_SECTIONS.slice(),
   shelfPlates:{show:false, labels:{}, hidden:{}},
   groupLayout:{}, defaultGroupLayout:"shelf",
+  ambience:true,
   oracle:null
 };
 
@@ -2603,13 +2782,41 @@ function labelOf(b){
 function scrawlOn(b){ return typeof b.scrawl === "boolean" ? b.scrawl : true; }
 /* The note someone else wrote on the tape before it reached you. */
 var SCRAWLS = [
-  "DO NOT WATCH", "don't tape over", "watch alone", "NOT FOR KIDS", "who left this here?",
-  "found in the attic", "copy 2 — don't lose", "it's on the tape", "REWIND IT", "3:07 AM",
-  "she's in the background", "do not return", "sound goes wrong at 1hr", "recorded over?",
-  "the end is missing", "play it twice", "#13", "evidence", "it knows", "don't look at 47:12",
-  "from the basement", "not mine", "keep away from the TV", "watched it. sorry."
+  "DON'T WATCH IT ALONE", "it isn't the movie anymore", "she was in the house the whole time",
+  "who keeps returning this", "the last 10 min aren't the film", "STOP REWINDING IT",
+  "I heard it in the walls after", "do not play after midnight", "found in the crawlspace",
+  "WE TAPED OVER IT. IT CAME BACK", "the face at 1:13:40", "count the people in the back row",
+  "it's watching back", "he wasn't in the original", "copy 3 of 3 — burn the others",
+  "listen with the sound OFF", "don't let it finish", "it knows your name now",
+  "why is there a 2nd ending", "this was in the woods", "PLEASE STOP SENDING THIS",
+  "she isn't an actress", "evidence #0417", "it smells like smoke when it plays",
+  "NOT A MOVIE", "don't look at the window during it", "Tuesday. again.",
+  "the tape was warm", "rewind it before you sleep", "we never bought this"
 ];
 function scrawlOf(b){ return SCRAWLS[hash("scrawl:" + b.id) % SCRAWLS.length]; }
+/* What was on the tape before somebody recorded the film over it. Home movies,
+   crossed out: that is the part that should bother you. */
+var TAPED_OVER = [
+  "Jenny's 7th bday", "Christmas '86", "DAD — DO NOT ERASE", "Wedding 6/14/85",
+  "Lake house '88", "Grandma's last visit", "baby's first steps", "Easter at Carol's",
+  "Mikey — school play", "our new house!", "Halloween '87", "Thanksgiving — everyone",
+  "the night before", "camping (don't watch)", "Sarah's recital", "home — basement"
+];
+function tapedOverOf(b){
+  return seeded(b, "over", 100) < 38 ? TAPED_OVER[seeded(b, "overtext", TAPED_OVER.length)] : "";
+}
+/* Every tape was labelled by somebody: four different hands, seeded from the
+   id. The width is how much line a letter of that hand takes, the scale how big
+   it has to be drawn to match the others by eye. */
+var HANDS = {
+  marker:  {width:0.60, scale:1},
+  scratch: {width:0.80, scale:0.82},
+  scrawl:  {width:0.40, scale:1.4},
+  neat:    {width:0.46, scale:1.25}
+};
+var HAND_KEYS = Object.keys(HANDS);
+function handOf(b){ return HAND_KEYS[seeded(b, "hand", HAND_KEYS.length)]; }
+
 function displayMode(b){
   return b.display === "front" ? "front" : (b.display === "angle" ? "angle" : "spine");
 }
@@ -2658,7 +2865,7 @@ function coverShow(b){
    than a sleeve, and how fat the case is. The lettering is fitted to the room
    instead (see spineFontSize). */
 var COVER_RATIO = 0.56;
-var BOX_W = {bare:54, rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
+var BOX_W = {bare:60, rental:46, slipcase:38, clamshell:50, foil:42, glossy:40};
 function autoH(b){
   var f = finishOf(b);
   return (f === "clamshell" ? 266 : f === "bare" ? 252 : 258) + (hash(b.id) % 3);
@@ -2719,7 +2926,8 @@ function savePrefs(){
     dir: state.dir,
     groupBy: state.groupBy,
     groupStyle: state.groupStyle,
-    oracle: state.oracle
+    oracle: state.oracle,
+    ambience: state.ambience
   }).catch(function(){
     setSave("Couldn't save your settings", "warn");
   });
@@ -2898,7 +3106,7 @@ function slabHTML(b, messy){
     (state.selecting && isSelected(b)
       ? '<span class="sel-tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7"/></svg></span>' : "") +
     (bare
-      ? '<span class="tlabel horiz slab-label lab-' + labelOf(b) + '" style="--tilt:' + (labelTilt(b) / 2) + 'deg">' +
+      ? '<span class="' + labelClass(b, " horiz slab-label") + '" style="--tilt:' + (labelTilt(b) / 2) + 'deg">' +
           (sh.title ? '<span class="tl-title">' + esc(b.title) + "</span>" : "") + "</span>"
       : (sh.number && b.part ? '<span class="slab-num">' + esc(b.part) + "</span>" : "") +
         (sh.title ? '<span class="slab-title">' + esc(b.title) + "</span>" : "") +
@@ -3638,10 +3846,31 @@ function spineFaceHTML(b, h, fs, s, sub, withPages){
    is seeded from its id, so a tape looks the same every time. */
 function seeded(b, salt, n){ return hash(salt + ":" + b.id) % n; }
 function labelTilt(b){ return (seeded(b, "tilt", 25) - 12) / 10; }
+/* What has happened to this label. At most three things, so the writing still
+   reads: a mug ring, a fingerprint (sometimes in blood), a smear of blood, a
+   water stain, a scorched end, a strip of Scotch tape holding it down. */
+var WEAR = [
+  ["ring", 22, '<i class="tl-ring"></i>'],
+  ["print", 20, '<i class="tl-print"></i>'],
+  ["bloodprint", 10, '<i class="tl-print blood"></i>'],
+  ["smear", 14, '<i class="tl-smear"></i>'],
+  ["spatter", 12, '<i class="tl-blood"></i>'],
+  ["water", 18, '<i class="tl-water"></i>'],
+  ["burn", 10, '<i class="tl-burn"></i>'],
+  ["scotch", 22, '<i class="tl-scotch"></i>']
+];
 function stainsHTML(b){
-  return (seeded(b, "ring", 100) < 30 ? '<i class="tl-ring"></i>' : "") +
-    (seeded(b, "print", 100) < 25 ? '<i class="tl-print"></i>' : "") +
-    (seeded(b, "blood", 100) < 12 ? '<i class="tl-blood"></i>' : "");
+  var out = "", n = 0;
+  WEAR.forEach(function(w){
+    if(n < 3 && seeded(b, w[0], 100) < w[1]){ out += w[2]; n++; }
+  });
+  return out;
+}
+/* The plastic itself: dust in the ridges, a scuff or two, and the light
+   catching worn corners. Angles are seeded so no two tapes scuff alike. */
+function plasticWearHTML(b){
+  return '<i class="bare-wear" style="--sa:' + (seeded(b, "scuffa", 50) - 25) + 'deg;--sb:' +
+    (seeded(b, "scuffb", 60) + 60) + 'deg;--sy:' + seeded(b, "scuffy", 70) + '%"></i>';
 }
 /* Stars as somebody would draw them in marker: whole ones and a half. */
 function starText(b){
@@ -3665,25 +3894,41 @@ function noteHTML(b, cls){
   var crossed = seeded(b, "cross", 3) === 0, red = seeded(b, "redn", 3) === 0;
   return '<span class="' + cls + (crossed ? " x" : "") + (red ? " red" : "") + '">' + esc(scrawlOf(b)) + "</span>";
 }
+function labelClass(b, extra){
+  return "tlabel lab-" + labelOf(b) + " hand-" + handOf(b) + (extra || "");
+}
+function tapedOverHTML(b){
+  var old = tapedOverOf(b);
+  return old ? '<span class="tl-old">' + esc(old) + "</span>" : "";
+}
 function bareSpineHTML(b, h, s){
   var len = h - 58;                              /* the label, end to end */
   var title = b.title || "Untitled";
   var chars = Math.max(1, title.length);
-  /* Permanent Marker runs about 0.6em a letter. Past what one line can hold at
-     a readable size, the title wraps onto a second and the note gives way. */
-  var one = len / (chars * 0.6);
-  var two = one < 10;
-  var fs = two ? Math.min(12, (len * 2) / (chars * 0.62)) : Math.min(19, one);
-  fs = Math.max(7.5, fs) * textScale(b);
+  var hand = HANDS[handOf(b)], old = tapedOverOf(b);
+  /* Past what one line can hold at a readable size, the title wraps onto a
+     second, and the note, or the crossed-out home movie, gives way. */
+  var one = len / (chars * hand.width);
+  var two = one < 10 * hand.scale;
+  var fs = two ? Math.min(12 * hand.scale, (len * 2) / (chars * hand.width * 1.03))
+               : Math.min(19 * hand.scale, 21, one);
   var details = labelDetails(b, s), stars = s.pips ? starText(b) : "";
+  /* And across: the title's line, or two, must leave room on the label for
+     the details, the stars and whatever was scrawled there first. */
+  var across = spineW(b) - 12 - (details.length ? 14 : 0) - (stars ? 12 : 0) -
+    (!two && (old || scrawlOn(b)) ? 14 : 0);
+  fs = Math.min(fs, across / (two ? 2.1 : 1.12));
+  fs = Math.max(7.5, fs) * textScale(b);
   return '<span class="bare-grip top"></span><span class="bare-grip bot"></span><span class="bare-well"></span>' +
-    '<span class="tlabel lab-' + labelOf(b) + (two ? " two" : "") + '" style="--tilt:' + labelTilt(b) +
+    plasticWearHTML(b) +
+    '<span class="' + labelClass(b, two ? " two" : "") + '" style="--tilt:' + labelTilt(b) +
       'deg;--fs:' + fs.toFixed(2) + 'px">' +
       stainsHTML(b) +
+      (two ? "" : tapedOverHTML(b)) +
       (s.title ? '<span class="tl-title">' + esc(title) + "</span>" : "") +
-      (details.length ? '<span class="tl-meta">' + esc(details.join(" · ")) + "</span>" : "") +
+      (details.length ? '<span class="tl-meta">' + esc(details.join(" \u00B7 ")) + "</span>" : "") +
       (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
-      (two ? "" : noteHTML(b, "tl-note")) +
+      (two || old ? "" : noteHTML(b, "tl-note")) +
     "</span>";
 }
 /* The face of the cassette, for a tape stood front-out or turned on the shelf.
@@ -3700,7 +3945,13 @@ function cassetteFrontHTML(b, w){
   var W = Math.round(w), H = Math.round(w / COVER_RATIO);
   var cs = coverShow(b), title = b.title || "Untitled";
   var chars = Math.max(1, title.length);
-  var fs = Math.max(W * 0.08, Math.min(W * 0.2, (H * 0.84 * 2) / (chars * 0.62) * 0.92));
+  var hand = HANDS[handOf(b)];
+  /* The label is under half the cassette's height: a title that fits on one
+     line is written big; a longer one takes two smaller lines, and then the
+     note gives way so the details still fit beneath it. */
+  var one = (H * 0.8) / (chars * hand.width);
+  var twoLines = one < W * 0.1;
+  var fs = twoLines ? Math.max(W * 0.06, Math.min(W * 0.085, one * 2 * 0.95)) : Math.min(W * 0.16, one);
 
   var wh = W * 0.30, a = reelAmount(b);
   function reel(x, amt){
@@ -3718,27 +3969,27 @@ function cassetteFrontHTML(b, w){
   return '<div class="cass-front" style="--c:' + esc(color(b)) + ';--cw:' + W + 'px">' +
     '<div class="cass leaf fin-bare" style="--c:' + esc(color(b)) + ';width:' + H + 'px;height:' + W + 'px">' +
       '<i class="cass-screw s1"></i><i class="cass-screw s2"></i><i class="cass-screw s3"></i><i class="cass-screw s4"></i>' +
-      '<span class="tlabel horiz lab-' + labelOf(b) + '" style="--tilt:' + labelTilt(b) + 'deg;--fs:' + fs.toFixed(2) + 'px">' +
-        stainsHTML(b) +
+      '<i class="cass-tab"></i><i class="cass-emboss">VHS</i><i class="cass-ridges"></i>' + plasticWearHTML(b) +
+      '<span class="' + labelClass(b, " horiz") + '" style="--tilt:' + labelTilt(b) + 'deg;--fs:' + fs.toFixed(2) + 'px">' +
+        stainsHTML(b) + tapedOverHTML(b) +
         (cs.title ? '<span class="tl-title">' + esc(title) + "</span>" : "") +
         (details.length ? '<span class="tl-meta">' + esc(details.join(" · ")) + "</span>" : "") +
         (stars ? '<span class="tl-stars">' + stars + "</span>" : "") +
-        noteHTML(b, "tl-note") +
+        (twoLines ? "" : noteHTML(b, "tl-note")) +
       "</span>" +
-      '<span class="cass-window">' + reel(27, 1 - a) + reel(73, a) + "</span>" +
+      '<span class="cass-window">' + reel(27, 1 - a) + reel(73, a) +
+        '<i class="cass-post p1"></i><i class="cass-post p2"></i></span>' +
     "</div>" +
   "</div>";
 }
 
 function coverPartsHTML(){
-
   return '<span class="fc-board"></span><span class="fc-spine"></span>';
 }
 /* Room the head band and foot take, so the lettering is fitted to what is left. */
 function spineFurnitureClass(b, s){
   if(finishOf(b) === "bare") return "";
-  return
- (s.number && b.part ? " has-num" : "") + (stickerOn(b) ? " has-sticker" : "");
+  return (s.number && b.part ? " has-num" : "") + (stickerOn(b) ? " has-sticker" : "");
 }
 function spineFontSize(b, h, sub){
   /* Fit the lettering to the room it actually has: box height, less the head
@@ -4816,6 +5067,11 @@ function openSettings(){
       '<input type="text" id="newCat" placeholder="Jump scares, Practical effects, Rewatchability…"></div>' +
     '<div class="icon-picker" id="iconPicker"></div>' +
     '<div class="page-rule"></div>' +
+    "<h4>Atmosphere</h4>" +
+    '<label class="toggle" for="ambienceOn" style="padding-bottom:0">' +
+      '<input type="checkbox" id="ambienceOn"' + (state.ambience ? " checked" : "") + ">Film grain, a flickering light and the VCR display</label>" +
+    '<p class="hint" style="margin:6px 0 0;font-size:.84rem">Turn it off for a calmer shelf. It is always off if your device asks for reduced motion.</p>' +
+    '<div class="page-rule"></div>' +
     "<h4>Status lights</h4>" +
     '<label class="toggle" for="globalDots" style="padding-bottom:0">' +
       '<input type="checkbox" id="globalDots"' + (state.statusDots.show ? " checked" : "") + ">Show the status light on every tape</label>" +
@@ -4953,6 +5209,10 @@ function openSettings(){
     });
 
   }
+  byId("ambienceOn").addEventListener("change", function(){
+    state.ambience = this.checked;
+    applyAmbience(); savePrefs();
+  });
   byId("globalDots").addEventListener("change", function(){
     state.statusDots.show = this.checked;
     savePrefs(); render();
@@ -6237,7 +6497,34 @@ document.addEventListener("keydown", function(e){
 })();
 
 
+/* ---------------- atmosphere ----------------
+   The tube overhead fails now and then, at no regular interval; the VCR's
+   clock shows tonight's time on a night in 1987. */
+function applyAmbience(){ document.body.classList.toggle("calm", !state.ambience); }
+(function(){
+  var lamp = byId("lamp"), clock = byId("osdClock");
+  var MONTHS = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+  function pad(n){ return (n < 10 ? "0" : "") + n; }
+  function tick(){
+    var d = new Date(), h = d.getHours();
+    clock.textContent = (h % 12 || 12) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) +
+      (h < 12 ? " AM" : " PM") + "  " + MONTHS[d.getMonth()] + "." + pad(d.getDate()) + " 1987";
+  }
+  tick();
+  setInterval(tick, 1000);
+  function flicker(){
+    if(state.ambience && !document.hidden && !REDUCED){
+      lamp.classList.remove("flick");
+      void lamp.offsetWidth;
+      lamp.classList.add("flick");
+    }
+    setTimeout(flicker, 9000 + Math.random() * 21000);
+  }
+  setTimeout(flicker, 6000 + Math.random() * 8000);
+})();
+
 /* ---------------- boot ---------------- */
+
 buildSortOptions();
 updateMoveSeg();
 drawSelectBar();
@@ -6268,6 +6555,7 @@ if(window.claude && window.claude.use){
           byId("platesOn").checked = state.shelfPlates.show;
         }
         if(d.oracle !== undefined) state.oracle = normOracle(d.oracle);
+        if(typeof d.ambience === "boolean"){ state.ambience = d.ambience; applyAmbience(); }
         if(d.groupLayout !== undefined) state.groupLayout = normLayoutMap(d.groupLayout);
         if(d.defaultGroupLayout !== undefined){
           state.defaultGroupLayout = normLayout(d.defaultGroupLayout, "shelf");
