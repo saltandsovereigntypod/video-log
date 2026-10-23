@@ -1,1 +1,40 @@
-{}
+{
+  "tape-obsession-2025": {
+    "seedRev": 1,
+    "title": "Obsession",
+    "director": "Curry Barker",
+    "series": "",
+    "part": null,
+    "year": 2025,
+    "runtime": 109,
+    "status": "watched",
+    "favorite": false,
+    "progress": 100,
+    "ratings": {
+      "overall": 4
+    },
+    "description": "A lovesick young man breaks a novelty “One Wish Willow” to make the girl he likes fall for him, and gets a devotion far more frightening than heartbreak.",
+    "display": "spine",
+    "coverId": null,
+    "addedAt": 1761177600000
+  },
+  "tape-the-nun-2018": {
+    "seedRev": 1,
+    "title": "The Nun",
+    "director": "Corin Hardy",
+    "series": "The Conjuring Universe",
+    "part": null,
+    "year": 2018,
+    "runtime": 96,
+    "status": "watched",
+    "favorite": false,
+    "progress": 100,
+    "ratings": {
+      "overall": 2.5
+    },
+    "description": "In 1952 the Vatican sends a haunted priest and a young novice to a remote Romanian abbey after a nun takes her own life there, and they find the demon Valak waiting.",
+    "display": "spine",
+    "coverId": null,
+    "addedAt": 1761177600001
+  }
+}
