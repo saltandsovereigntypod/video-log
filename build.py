@@ -57,10 +57,59 @@ SHIM = """
     catch(e){ /* private mode, quota — the session still works in memory */ }
   }
 
-  var store = read();
-  if(!store){ store = { tapes: SEED, settings: {} }; write(store); }
+  var store = read() || { tapes: {}, settings: {} };
   if(!store.tapes) store.tapes = {};
   if(!store.settings) store.settings = {};
+
+  /* The seed is not only for a first run. Tapes written into
+     src/library.seed.json reach every device the next time the app opens,
+     including devices that already have a shelf: that is how a tape added in
+     the code shows up everywhere. Each seed tape carries a seedRev; a device
+     applies it once per rev, so a tape deleted or edited in the app is left
+     alone until the seed itself is changed again.
+     A seed tape lands on the tape with its id, or failing that on a tape
+     already on the shelf with the same title, so a film added by hand and
+     then added in the code is not doubled. Its fields replace the tape's,
+     except ratings, which merge key by key: categories the seed does not
+     mention keep whatever was given in the app. */
+  function normTitle(t){
+    return String(t || "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ")
+      .replace(/ +/g, " ").replace(/^ | $/g, "").replace(/^(the|a|an) /, "");
+  }
+  var revs = store.seedRevs || {}, seeded = false;
+  Object.keys(SEED).forEach(function(id){
+    var s = SEED[id];
+    if(!s || typeof s !== "object") return;
+    var rev = typeof s.seedRev === "number" ? s.seedRev : 1;
+    if((revs[id] || 0) >= rev) return;
+    var target = store.tapes[id] ? id : null;
+    if(!target){
+      Object.keys(store.tapes).some(function(k){
+        if(normTitle(store.tapes[k] && store.tapes[k].title) === normTitle(s.title)){ target = k; return true; }
+        return false;
+      });
+    }
+    var body = JSON.parse(JSON.stringify(s));
+    delete body.seedRev;
+    if(target){
+      var t = store.tapes[target];
+      var ratings = Object.assign({}, t.ratings || {}, body.ratings || {});
+      Object.keys(body).forEach(function(k){
+        if(k === "id" || k === "addedAt" || k === "order") return;
+        t[k] = body[k];
+      });
+      t.ratings = ratings;
+    } else {
+      body.id = id;
+      if(typeof body.addedAt !== "number") body.addedAt = Date.now();
+      store.tapes[id] = body;
+    }
+    revs[id] = rev;
+    seeded = true;
+  });
+  store.seedRevs = revs;
+  if(seeded || !read()) write(store);
+
 
   var tapeListeners = [];
   var docListeners = {};   // path -> [fn]
